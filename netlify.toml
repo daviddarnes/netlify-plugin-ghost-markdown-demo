@@ -6,7 +6,7 @@
   JEKYLL_ENV = "production"
 
 [[plugins]]
-package = "netlify-plugin-ghost-markdown"
+package = "./plugins/index.js"
 
    [plugins.inputs]
    ghostURL = "https://demonstration.ghost.io"
