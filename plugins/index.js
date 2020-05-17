@@ -47,15 +47,25 @@ const downloadImage = async (inputURI, outputPath, failPlugin) => {
   }
 };
 
+// Relative image paths
+const getRelativePath = (assetsDir, docDir) => {
+  const explodedAssetsDir = assetsDir.split("/");
+  const explodedDocDir = docDir.split("/");
+
+  const difference = explodedAssetsDir.findIndex((slice, index) => {
+    return explodedDocDir[index] != slice;
+  });
+
+  return "/" + explodedAssetsDir.slice(difference).join("/");
+};
+
 // Markdown template
 const mdTemplate = (item, imagePath, assetsDir, layout) => {
-  // Remove dot for valid HTML
-  const assetsPath = assetsDir.replace("./", "/");
 
   // Format fearture image path
   const formatFeatureImage = (path) => {
     if (path) {
-      return path.replace(imagePath, assetsPath);
+      return path.replace(imagePath, assetsDir);
     }
     return "";
   };
@@ -71,7 +81,7 @@ const mdTemplate = (item, imagePath, assetsDir, layout) => {
   // Format HTML with updated image parths
   const formatHtml = (html) => {
     if (html) {
-      return item.html.replace(new RegExp(imagePath, "g"), assetsPath);
+      return html.replace(new RegExp(imagePath, "g"), assetsDir);
     }
     return "";
   };
@@ -198,11 +208,14 @@ module.exports = {
           ? `${post.published_at.slice(0, 10)}-${post.slug}`
           : post.slug;
 
+        // Remove initial matching paths for relative source path
+        const relativeAssetsDir = getRelativePath(assetsDir, postsDir);
+
         // Create post markdown file with content
         await writeMarkdown(
           postsDir,
           `${filename}.md`,
-          mdTemplate(post, ghostImagePath, assetsDir, postsLayout),
+          mdTemplate(post, ghostImagePath, relativeAssetsDir, postsLayout),
           failPlugin
         );
         console.log(chalk.gray('Generated post: ') + chalk.gray.underline(post.title));
@@ -211,11 +224,14 @@ module.exports = {
       // Generate markdown pages
       ...pages.map(async (page) => {
 
+        // Remove initial matching paths for relative source path
+        const relativeAssetsDir = getRelativePath(assetsDir, pagesDir);
+
         // Create page markdown file with content
         await writeMarkdown(
           pagesDir,
-          `${pagesDir + page.slug}.md`,
-          mdTemplate(page, ghostURL, ghostImagePath, assetsDir, pagesLayout),
+          `${page.slug}.md`,
+          mdTemplate(page, ghostImagePath, relativeAssetsDir, pagesLayout),
           failPlugin
         );
         console.log(chalk.gray('Generated page: ') + chalk.gray.underline(page.title));
