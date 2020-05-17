@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 const fetch = require("node-fetch");
 const url = require("url");
-const chalk = require('chalk');
+const chalk = require("chalk");
 const ghostContentAPI = require("@tryghost/content-api");
 
 // Get posts using Ghost Content API
@@ -34,14 +34,12 @@ const getPages = async (api, failPlugin) => {
 // Download images
 const downloadImage = async (inputURI, outputPath, failPlugin) => {
   try {
-
     // Grab file data from remote inputURI
     const res = await fetch(inputURI);
     const fileData = await res.buffer();
 
     // Write the file and cache it
     await fs.outputFile(outputPath, fileData);
-
   } catch (error) {
     failPlugin("Image file error", { error });
   }
@@ -61,7 +59,6 @@ const getRelativePath = (assetsDir, docDir) => {
 
 // Markdown template
 const mdTemplate = (item, imagePath, assetsDir, layout) => {
-
   // Format fearture image path
   const formatFeatureImage = (path) => {
     if (path) {
@@ -127,7 +124,6 @@ module.exports = {
       cache
     }
   }) => {
-
     // Ghost images path
     const ghostImagePath = ghostURL + "/content/images/";
 
@@ -146,7 +142,6 @@ module.exports = {
 
     // Find all images
     const findImages = (allContent) => {
-
       // Find all posts and pages with images in the HTML
       const htmlWithImages = allContent
         .filter((item) => item.html && item.html.includes(ghostImagePath))
@@ -177,32 +172,30 @@ module.exports = {
 
     // Generate all images, posts and pages…
     await Promise.all([
-
       // Replace Ghost image paths with local ones
-      ...findImages([...posts, ...pages]).map( async (image) => {
-
+      ...findImages([...posts, ...pages]).map(async (image) => {
         // Image destination
         const dest = image.replace(ghostImagePath, assetsDir);
 
         // Check if image is in Netlify cache
         if (await cache.has(dest)) {
-
           // Restore image from cache
           await cache.restore(dest);
-          console.log(chalk.green('Restored from cache: ') + chalk.green.underline(dest));
-
+          console.log(
+            chalk.green("Restored from cache: ") + chalk.green.underline(dest)
+          );
         } else {
-
           // …otherwise download the image and cache it
           await downloadImage(image, dest, failPlugin);
           await cache.save(dest);
-          console.log(chalk.cyan('Downloading and caching: ') + chalk.cyan.underline(dest));
+          console.log(
+            chalk.cyan("Downloading and caching: ") + chalk.cyan.underline(dest)
+          );
         }
       }),
 
       // Generate markdown posts
       ...posts.map(async (post) => {
-
         // Prefix filename with date, Jekyll style formatting
         const filename = postDatePrefix
           ? `${post.published_at.slice(0, 10)}-${post.slug}`
@@ -218,12 +211,13 @@ module.exports = {
           mdTemplate(post, ghostImagePath, relativeAssetsDir, postsLayout),
           failPlugin
         );
-        console.log(chalk.gray('Generated post: ') + chalk.gray.underline(post.title));
+        console.log(
+          chalk.gray("Generated post: ") + chalk.gray.underline(post.title)
+        );
       }),
 
       // Generate markdown pages
       ...pages.map(async (page) => {
-
         // Remove initial matching paths for relative source path
         const relativeAssetsDir = getRelativePath(assetsDir, pagesDir);
 
@@ -234,7 +228,9 @@ module.exports = {
           mdTemplate(page, ghostImagePath, relativeAssetsDir, pagesLayout),
           failPlugin
         );
-        console.log(chalk.gray('Generated page: ') + chalk.gray.underline(page.title));
+        console.log(
+          chalk.gray("Generated page: ") + chalk.gray.underline(page.title)
+        );
       })
     ]);
   }
