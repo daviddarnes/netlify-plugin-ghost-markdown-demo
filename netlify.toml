@@ -9,12 +9,8 @@
 package = "./plugins/index.js"
 
   [plugins.inputs]
-  ghostURL = "https://demo.ghost.io"
-  ghostKey = "22444f78447824223cefc48062"
-  assetsDir = "./assets/images/"
-  pagesDir = "./"
-  postsDir = "./_posts/"
-  cacheFile = "./_data/ghostMarkdownCache.json"
+  ghostURL = "https://demonstration.ghost.io"
+  ghostKey = "93e63c8b150f4a145c0611aed0"
 
 [[plugins]]
 package = "@netlify/plugin-local-install-core"
