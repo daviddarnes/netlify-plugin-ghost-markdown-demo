@@ -175,7 +175,10 @@ const getAllImages = ({ contentItems, imagesPath }) => {
 
   const htmlImages = htmlWithImages
     .map(html => {
-      return html.split('"').filter(slice => slice.includes(imagesPath));
+      const splitStrings = html.split('"');
+      return splitStrings
+        .split(" ")
+        .filter(slice => slice.includes(imagesPath));
     })
     .flat();
 
@@ -236,6 +239,9 @@ module.exports = {
       await cache.restore(cacheFile);
       cacheTime = Date.parse(
         await readFile({ file: cacheFile, failPlugin: failPlugin })
+      );
+      console.log(
+        chalk.cyan("Last cached rebuild: ") + chalk.cyan.underline(cacheTime)
       );
     }
 
