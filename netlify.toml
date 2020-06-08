@@ -6,6 +6,7 @@
   JEKYLL_ENV = "production"
 
 [[plugins]]
+  package = "@netlify/plugin-local-install-core"
   package = "./plugins/index.js"
 
   [plugins.inputs]
