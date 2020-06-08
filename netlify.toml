@@ -7,7 +7,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-local-install-core"
-  package = "./plugins/index.js"
 
   [plugins.inputs]
     ghostURL = "https://demo.ghost.io"
@@ -16,3 +15,6 @@
     pagesDir = "./"
     postsDir = "./_posts/"
     cacheFile = "./_data/ghostMarkdownCache.json"
+
+[[plugins]]
+  package = "./plugins/index.js"
