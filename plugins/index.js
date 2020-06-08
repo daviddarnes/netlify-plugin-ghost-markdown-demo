@@ -238,8 +238,11 @@ module.exports = {
         await readFile({ file: cacheFile, failPlugin: failPlugin })
       );
       console.log(
-        chalk.cyan("Last cached rebuild: ") + chalk.cyan.underline(cacheTime)
+        chalk.cyan("Last cached rebuild: ") +
+          chalk.cyan.underline(cacheTime.toString())
       );
+    } else {
+      console.log(chalk.red("No cache file found"));
     }
 
     // Write new cache file and cache it
@@ -265,7 +268,7 @@ module.exports = {
           await cache.save(dest);
 
           console.log(
-            chalk.cyan("Downloaded and cached: ") + chalk.cyan.underline(dest)
+            chalk.green("Downloaded and cached: ") + chalk.green.underline(dest)
           );
         } else {
           // Restore the image if it's already in the cache
