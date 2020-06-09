@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 const fetch = require("node-fetch");
 const url = require("url");
-const { cyan, blue, yellow } = require("chalk");
+const { cyan, green, yellow } = require("chalk");
 const ghostContentAPI = require("@tryghost/content-api");
 
 const log = ({ color, label, value = false }) => {
@@ -11,7 +11,7 @@ const log = ({ color, label, value = false }) => {
   // label = string, text label
   // value = var, value being read out
   // });
-  console.log(`${color(label)}${value && color(": ")}${color.bold(value)}`);
+  console.log(`${color(label)}${value ? color(`: ${color.bold(value)}`) : ""}`);
 };
 
 const getContent = async ({ contentType, failPlugin }) => {
@@ -306,7 +306,7 @@ module.exports = {
           await cache.save(dest);
 
           log({
-            color: blue,
+            color: green,
             label: "Downloaded and cached",
             value: dest
           });
@@ -363,7 +363,7 @@ module.exports = {
           await cache.save(fullFilePath);
 
           log({
-            color: blue,
+            color: green,
             label: "Generated and cached",
             value: fullFilePath
           });
@@ -406,7 +406,7 @@ module.exports = {
           await cache.save(fullFilePath);
 
           log({
-            color: blue,
+            color: green,
             label: "Generated and cached",
             value: fullFilePath
           });
