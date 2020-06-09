@@ -9,8 +9,8 @@
 package = "./plugins/index.js"
 
   [plugins.inputs]
-  ghostURL = "https://demonstration.ghost.io"
-  ghostKey = "93e63c8b150f4a145c0611aed0"
+  ghostURL = "https://demo.ghost.io"
+  ghostKey = "22444f78447824223cefc48062"
 
 [[plugins]]
 package = "@netlify/plugin-local-install-core"
