@@ -1,0 +1,16 @@
+# Local Netlify folder
+.netlify
+
+# Netlify Build Plugin
+_data/
+_posts/
+assets/
+
+# Jekyll
+.jekyll-cache/
+Gemfile.lock
+_site/
+
+# npm
+node_modules/
+package-lock.json
