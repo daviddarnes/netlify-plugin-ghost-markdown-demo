@@ -97,6 +97,10 @@ const formatImagePaths = ({ string, imagesPath, assetsDir }) => {
   // assetsDir = string, the new path for the image
   // });
 
+  console.log("string", string);
+  console.log("imagesPath", imagesPath);
+  console.log("assetsDir", assetsDir);
+
   // Take a string and replace the Ghost image path with the new images path
   return string.replace(new RegExp(imagesPath, "g"), assetsDir);
 };
