@@ -6,8 +6,12 @@
   JEKYLL_ENV = "production"
 
 [[plugins]]
-  package = "netlify-plugin-ghost-markdown"
+  package = "./plugins/netlify-plugin-ghost-markdown"
 
   [plugins.inputs]
   ghostURL = "https://demo.ghost.io"
   ghostKey = "22444f78447824223cefc48062"
+  authorsLayout = "page"
+  tagsLayout = "page"
+  authorPages = true
+  tagPages = true
