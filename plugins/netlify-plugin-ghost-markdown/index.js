@@ -102,7 +102,7 @@ const formatImagePaths = ({ string, imagesPath, assetsDir }) => {
   console.log("assetsDir", assetsDir);
 
   // Take a string and replace the Ghost image path with the new images path
-  return string?.replace(new RegExp(imagesPath, "g"), assetsDir);
+  return string.replace(new RegExp(imagesPath, "g"), assetsDir);
 };
 
 const createMarkdownContent = ({ content, imagesPath, assetsDir, layout }) => {
@@ -129,7 +129,7 @@ const createMarkdownContent = ({ content, imagesPath, assetsDir, layout }) => {
     layout: ${layout}
     excerpt: "${content.custom_excerpt ? content.custom_excerpt : ""}"
     image: "${
-      content.feature_image
+      (content.feature_image && content.feature_image != null)
         ? formatImagePaths({
             string: content.feature_image,
             imagesPath,
@@ -169,7 +169,7 @@ const createTagMarkdown = ({ content, imagesPath, assetsDir, layout }) => {
     layout: ${layout}
     excerpt: "${content.description ? content.description : ""}"
     image: "${
-      content.feature_image
+      (content.feature_image && content.feature_image != null)
         ? formatImagePaths({
             string: content.feature_image,
             imagesPath,
@@ -200,7 +200,7 @@ const createAuthorMarkdown = ({ content, imagesPath, assetsDir, layout }) => {
     layout: ${layout}
     excerpt: "${content.bio ? content.bio : ""}"
     image: "${
-      content.cover_image
+      (content.cover_image && content.cover_image != null)
         ? formatImagePaths({
             string: content.cover_image,
             imagesPath,
