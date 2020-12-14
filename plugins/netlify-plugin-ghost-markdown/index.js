@@ -143,7 +143,7 @@ const createMarkdownContent = ({ content, imagesPath, assetsDir, layout }) => {
     ${
       content.html
         ? formatImagePaths({
-            string: content.feature_image,
+            string: content.html,
             imagesPath,
             assetsDir
           })
